@@ -1,2 +1,2 @@
-# ncp-activities
-Activities of NCP project
+# NeuroCP Activities
+Activities of NCP project developed in JavaScript
