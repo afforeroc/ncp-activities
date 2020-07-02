@@ -23,7 +23,7 @@ let targetCard;
     lockBoard = true;
     setTimeout(() => { // Wait time 1.5 seconds after first flip.
         targetCard.classList.remove('flip'); // Return the target card to inicial state.
-        resetBoard();
+        blockBoard();
     }, 1500);
 })();
 
@@ -48,17 +48,31 @@ function checkForMatch() {
 
 function disableAllCards() {
     cards.forEach(card => card.removeEventListener('click', findCard));
+    toggle();
 }
 
 function hideCard() {
     lockBoard = true;
     setTimeout(() => { // Wait time 1.5 seconds after last click.
         selectedCard.classList.remove('flip'); // Return the selected card to inicial state.
-        resetBoard();
+        blockBoard();
     }, 1500);
 }
 
-function resetBoard() { // Necessary to work fine avoid double click (line 10).
+function blockBoard() { // Necessary to work fine avoid double click (line 10).
     [hasFlippedCard, lockBoard] = [false, false];
     selectedCard = null;
+}
+
+/* New functions */
+function toggle() {
+    /*
+    var blur = document.getElementById('blur');
+    blur.classList.toggle('active');
+    var popup = document.getElementById('popup');
+    popup.classList.toggle('active');*/
+    /*$("#myModal").modal('show');*/
+    $("#exampleModalCenter").modal('show');
+    var audio = new Audio('sounds/sucess.mp3');
+    audio.play();
 }

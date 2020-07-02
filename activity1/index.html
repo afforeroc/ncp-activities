@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <title>NCP: Activity 1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- styles.css -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <section class="memory-game" id="blur"> <!-- Board game -->
+        <div class="memory-card" data-framework="books">
+            <!-- This order specifies which is first(over) and second(under) -->
+            <img class="front-face" src="images/books.svg" alt="Books">
+            <img class="back-face" src="images/mystery.svg" alt="Mystery">
+        </div>
+        <div class="memory-card" data-framework="car">
+            <img class="front-face" src="images/car.svg" alt="Car">
+            <img class="back-face" src="images/mystery.svg" alt="Mystery">
+        </div>
+        <div class="memory-card" data-framework="clock">
+            <img class="front-face" src="images/clock.svg" alt="Clock">
+            <img class="back-face" src="images/mystery.svg" alt="Mystery">
+        </div>
+        <div class="memory-card" data-framework="glasses">
+            <img class="front-face" src="images/glasses.svg" alt="Glasses">
+            <img class="back-face" src="images/mystery.svg" alt="Mystery">
+        </div>
+        <div class="memory-card" data-framework="handbag">
+            <img class="front-face" src="images/handbag.svg" alt="Handbag">
+            <img class="back-face" src="images/mystery.svg" alt="Mystery">
+        </div>
+        <div class="memory-card" data-framework="hat">
+            <img class="front-face" src="images/hat.svg" alt="Hat">
+            <img class="back-face" src="images/mystery.svg" alt="Mystery">
+        </div>
+        <div class="memory-card" data-framework="mail">
+            <img class="front-face" src="images/mail.svg" alt="Mail">
+            <img class="back-face" src="images/mystery.svg" alt="Mystery">
+        </div>
+        <div class="memory-card" data-framework="palm-tree">
+            <img class="front-face" src="images/palm-tree.svg" alt="Palm Tree">
+            <img class="back-face" src="images/mystery.svg" alt="Mystery">
+        </div>
+        <div class="memory-card" data-framework="pencil">
+            <img class="front-face" src="images/pencil.svg" alt="Pencil">
+            <img class="back-face" src="images/mystery.svg" alt="Mystery">
+        </div>
+        <div class="memory-card" data-framework="shoe">
+            <img class="front-face" src="images/shoe.svg" alt="Shoe">
+            <img class="back-face" src="images/mystery.svg" alt="Mystery">
+        </div>
+        <div class="memory-card" data-framework="shop">
+            <img class="front-face" src="images/shop.svg" alt="Shop">
+            <img class="back-face" src="images/mystery.svg" alt="Mystery">
+        </div>
+        <div class="memory-card" data-framework="tic-tac-toe">
+            <img class="front-face" src="images/tic-tac-toe.svg" alt="Tic Tac Toe">
+            <img class="back-face" src="images/mystery.svg" alt="Mystery">
+        </div>
+    </section>
+    <!--
+    <div id="popup">
+        <h2>Felicitaciones!</h2>
+        <h3>Haz completado la Actividad 1 - Nivel 1</h3>
+        <p>
+            Continua o regresa para continuar practicando.
+        </p>
+        <div id="final-buttons">
+            <a class="repeat" href="#" onclick="toggle()">Repetir</a>
+            <a class="next" href="#" onclick="toggle()">Avanzar</a>
+        </div>
+    </div>
+    -->
+
+
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="icon-box">
+                        <i class="material-icons">&#xE876;</i>
+                    </div>				
+                    <h4 class="modal-title w-100">Awesome!</h4>	
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">Your booking has been confirmed. Check your email for detials.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Actividad Completa!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                Felicitaciones. Haz realizado la primera actividad. <br>
+                ¿Deseas continuar avanzando o repetir el nivel?
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Repetir</button>
+            <button type="button" class="btn btn-primary">Continuar</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <!-- scripts.js -->
+    <script src="scripts.js"></script>
+</body>
+</html>
