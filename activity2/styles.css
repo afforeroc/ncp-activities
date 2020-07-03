@@ -43,9 +43,9 @@ body {
 }
 
 .memory-card {
-    /*width: calc(25% - 10px); /* To avoid desborder size of '.memory-card' respect '.memory-game'. */
-    /*height: calc(33.3333% - 10px); /* Same. */
-    margin: 5px; /* Space between cards. */
+    width: calc(25% - 0.625rem); /* To avoid desborder size of '.memory-card' respect '.memory-game'. */
+    height: calc(33.3333% - 0.625rem); /* Same. */
+    margin: 0.3125rem; /* Space between cards. */
     position: relative;
     transform: scale(1); /* Original size. */
     transform-style: preserve-3d; /* 3D effect. */
@@ -65,7 +65,7 @@ body {
 .front-face, .back-face {
     width: 100%;
     height: 100%;
-    padding: 20px;
+    padding: 1.25rem;
     position: absolute; /* Put front-face over back-face. */
     border-radius: 5px;
     background-color: #1c7ccc;
