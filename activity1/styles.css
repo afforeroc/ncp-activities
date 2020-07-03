@@ -77,44 +77,13 @@ body {
     transform: rotateY(180deg); /* When is rotated, the frontface of '.back-face' will appear. */
 }
 
-
-/* New Styles */
-.memory-game #blur.active {
-    filter: blur(5px);
-    pointer-events: none;
-    user-select: none;
-}
-
-#popup {
-    position: fixed;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 50px;
-    box-shadow: 0 5px 30px rgba(0, 0, 0, .30);
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.5s;
-    font-size: 1.6em;
-    background: #fff;
-    width: 80%;
-    height: 40vh;
-    border-radius: 1em;
-}
-
-#popup.active {
-    top: 50%;
-    visibility: visible;
-    opacity: 1;
-    transition: 0.5s;
-}
-
 /* --- MODAL --- */
 .modal-confirm {		
     color: #636363;
     color: white;
 	width: 325px;
     font-size: 14px;
+    
 }
 
 .modal-confirm .modal-content {
@@ -194,6 +163,7 @@ body {
 	outline: none;
 }
 
+
 /* --- MODAL Aditional --- */
 .modal-backdrop {
     background-color: transparent;
@@ -205,8 +175,6 @@ body {
     border-color: rgba(255, 255, 255, 0.3);
 }
 
-
-
 .modal-title, .modal-body {
     color: white;
     text-shadow: black 0px 0px 10px;
@@ -215,4 +183,10 @@ body {
 .modal-image {
     width: 100px;
     height: 100px;
-} 
+}
+
+/* Fixed Vertical Scroll https://github.com/twbs/bootstrap/issues/30647 */
+.modal.modal-static .modal-dialog {
+    -webkit-transform: none !important;
+    transform: none !important;
+}

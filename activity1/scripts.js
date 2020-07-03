@@ -48,7 +48,7 @@ function checkForMatch() {
 
 function disableAllCards() {
     cards.forEach(card => card.removeEventListener('click', findCard));
-    toggle();
+    showFinalMessage();
 }
 
 function hideCard() {
@@ -65,14 +65,8 @@ function blockBoard() { // Necessary to work fine avoid double click (line 10).
 }
 
 /* New functions */
-function toggle() {
-    /*
-    var blur = document.getElementById('blur');
-    blur.classList.toggle('active');
-    var popup = document.getElementById('popup');
-    popup.classList.toggle('active');*/
-    /*$("#myModal").modal('show');*/
-    $("#exampleModalCenter").modal('show');
-    var audio = new Audio('sounds/sucess.mp3');
-    audio.play();
+function showFinalMessage() {
+    $('#myModalCenter').modal({backdrop: 'static', keyboard: false}); // Show modal and block other interactions around the box
+    var audio = new Audio('sounds/sucess.mp3'); // Load sound
+    audio.play(); // Play sound
 }
