@@ -26,6 +26,7 @@ body {
     flex-wrap: wrap; /* Whether the flexible items should wrap or not. */
     perspective: 1000px; /* Define how far the object is away from the user. */
     /*border: 2px solid aqua;*/
+    pointer-events: auto;
 }
 
 @media (max-width: 979px) and (orientation:portrait) {

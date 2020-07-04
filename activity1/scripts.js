@@ -1,60 +1,112 @@
-/* --- PART 1 - Elements and functions that execute once. --- */
+/* Constants */
+const ROWS = 3;
+const COLUMNS = 4;
+const numTarget = COLUMNS;
 const cards = document.querySelectorAll('.memory-card'); // Load a list of all '.memory-card' elements.
+resizeCards(ROWS, COLUMNS); // Edit size of cards.
 
-/* --- Edit CSS --- */
-let hCards = 4;
-let vCards = 3;
-(function resizeCards() {
-    console.log('resizeCards');
-    var widthCard = 100 / hCards;
-    var heightCard = 100 / vCards;
+/* --- PART 1 - This section are executed once time. --- */
+let numGames = 0;
+initGame();
+
+/* --- PART 2 - Functions --- */
+function resizeCards(rows, columns) {
+    var widthCard = 100 / COLUMNS;
+    var heightCard = 100 / ROWS;
     cards.forEach(card => card.style.width = `calc(${widthCard}% - 10px)`);
     cards.forEach(card => card.style.height = `calc(${heightCard}% - 10px)`);
-})();
+}
 
-shuffleCards();
+function initGame() {
+    numGames += 1;
+    if (numGames == 1) {
+        console.log("First game");
+    } else {
+        console.log(`Game #${numGames}`);
+        cards.forEach(card => card.classList.remove('flip'));
+    }
+    //shuffleCards();
+    cards.forEach(card => card.addEventListener('click', findCard));
+    [hasFlippedCard, lockBoard] = [false, false];
+    numMatch = 0;
+    targetCards = setTargetCards(ROWS, COLUMNS);
+    showTargetCards(targetCards);
+}
 
-cards.forEach(card => card.addEventListener('click', findCard)); // Link each card with 'findCard' funtion.
-
-let [hasFlippedCard, lockBoard] = [false, true]; // Initial conditions
-
-let numTarget = 3;
-let randomPosSet = []
-let targetCards = [];
-let numMatch = 0;
-
-setTargetCards();
-showTargetCards();
-
-/* --- PART 2 - Functions that execute until the user wins or go out the page. --- */
 function shuffleCards() { // Asign a unique random number to 12 cards.
     cards.forEach(card => {
         let randomPos = Math.floor((Math.random() * 12));
         card.style.order = randomPos;
     });
+    cards.forEach(card => card.addEventListener('click', findCard));
 }
 
-function setTargetCards() { // Establish the target cards to find.
+function findPosMatrix(number, columns) {
+    let row = Math.floor(number/columns);
+    let col = number - columns*row;
+    return [row, col];
+}
+
+function isAdjacent(number, columns, targetSet) {
+    let boxBase = findPosMatrix(number, columns);
+    let item;
+    let boxItem = [];
+    for (var i = 0; i < targetSet.length; i++) {
+        item = targetSet[i];
+        boxItem = findPosMatrix(item, columns);
+        if (Math.abs(boxBase[0] - boxItem[0]) == 1 && Math.abs(boxBase[1] - boxItem[1]) == 1) {
+            return 0; //Allowed: Diagonal
+        }
+        if (Math.abs(boxBase[0] - boxItem[0]) == 1 && Math.abs(boxBase[1] - boxItem[1]) != 1) {
+            return 1; // Prohibited: Up or down
+        }
+        if (Math.abs(boxBase[0] - boxItem[0]) != 1 && Math.abs(boxBase[1] - boxItem[1]) == 1) {
+            return 1; // Prohibited: Left or right
+        }
+    }
+    return 0;
+}
+
+function setTargetCards(rows, columns) { // Establish the target cards to find.
+    let numCards = rows*columns;
+    var box = [];
+    let targetSet = [];
+    let targetCards = [];
+    let randomPos;
     i = 0;
     while (i < numTarget) {
-        let randomPos = Math.floor((Math.random() * 12));
-        if(!randomPosSet.includes(randomPos)){
-            i += 1;
-            randomPosSet.push(randomPos);
-            let randomCard = cards[randomPos]; // Set a random card.
-            targetCards.push(randomCard);
-        }   
+        randomPos = Math.floor((Math.random() * 12));
+        if(!targetSet.includes(randomPos) && !isAdjacent(randomPos, columns, targetSet)){
+            targetSet.push(randomPos);
+            targetCards.push(cards[randomPos]);
+            i += 1;   
+        }
     }
-    console.log(targetCards.length)
+    return targetCards;
 }
 
-function showTargetCards() {
-    targetCards.forEach(card => card.classList.add('flip'));
+// Show a card
+function showCard(card) {
     lockBoard = true;
-    setTimeout(() => { // Wait time 1.5 seconds after first flip.
-        targetCards.forEach(card => card.classList.remove('flip')); // Return the target card to inicial state.
-        blockBoard();
-    }, 1500);
+    return new Promise(function(resolve, reject){
+        setTimeout(function() {
+            card.classList.add('flip');
+            setTimeout(() => { card.classList.remove('flip');
+            }, 1000);
+            blockBoard();
+            resolve(card);
+        }, 1500)
+    })
+}
+
+// Show all cards in sequence
+async function showTargetCards(targetCards) {
+    $('.memory-game').css('pointer-events', 'none');
+    for(let i = 0; i < targetCards.length; i++){
+        await showCard(targetCards[i]);
+    }
+    setTimeout(() => { $('.memory-game').css('pointer-events', 'auto');
+    }, 2000);
 }
 
 function findCard(){
@@ -68,25 +120,20 @@ function findCard(){
 }
 
 function checkForMatch() {
-    console.log("checkForMatch");
-    console.log(selectedCard);
-    let isMatch = targetCards.includes(selectedCard);
+    let isMatch = (targetCards[0] === selectedCard);
     if (isMatch) {
+        targetCards.shift();
         numMatch += 1;
-        console.log("One match!")
         soundMatch();
         disableCard();
         if (numMatch === numTarget){
-            console.log("disableAllCards!")
             disableAllCards();
         }
         else {
-            console.log("blockBoard")
             blockBoard();
         }
     }
     else {
-        console.log("hideCard!")
         hideCard();
     }
 
@@ -115,7 +162,6 @@ function blockBoard() { // Necessary to work fine avoid double click (line 10).
     selectedCard = null;
 }
 
-/* New functions */
 function showFinalMessage() {
     $('#myModalCenter').modal({backdrop: 'static', keyboard: false}); // Show modal and block other interactions around the box  
 }
@@ -123,23 +169,4 @@ function showFinalMessage() {
 function soundMatch() {
     var audio = new Audio('sounds/sucess.mp3'); // Load sound
     audio.play(); // Play sound
-}
-
-function initGame() {
-    console.log("restart!");
-    [hasFlippedCard, lockBoard] = [false, false];
-    cards.forEach(card => card.classList.remove('flip'));
-    cards.forEach(card => card.addEventListener('click', findCard));
-    setTimeout(() => {
-        shuffleCards();
-    }, 1500);
-    numTarget = 3;
-    numMatch = 0;
-    randomPosSet = []
-    targetCards = [];
-    setTargetCards();
-    setTimeout(() => {
-        showTargetCards();
-    }, 1500);
-    
 }
