@@ -24,9 +24,7 @@ function initGame() {
     [hasFlippedCard, lockBoard] = [false, false];
     [firstCard, secondCard] = [null, null];
     numMatch = 0;
-    setTimeout(() => {
-        shuffleCards();
-    }, 1500);
+    shuffleCards();
 }
 
 function resizeCards(rows, columns) {
@@ -37,6 +35,7 @@ function resizeCards(rows, columns) {
 }
 
 function showInitialMessage() {
+    console.log("InitialMessage");
     $('.modal-title').text('Actividad 2');
     $('.modal-image').attr("src", "images/instructions.svg");
     $('.modal-message').text('Encuentra las cartas que son pareja destapandolas de dos en dos. Tomate tu tiempo, el objetivo es reforzar tu memoria visual realizando el mínimo de pasos posibles para completar esta actividad. ¡Ánimo!');
