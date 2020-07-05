@@ -1,22 +1,16 @@
-/* Constants */
+/* --- ACTIVITY 1 --- */
+/* --- PART 0 -  Init --- */
 const ROWS = 3;
 const COLUMNS = 4;
-const numTarget = COLUMNS;
 const cards = document.querySelectorAll('.memory-card'); // Load a list of all '.memory-card' elements.
 resizeCards(ROWS, COLUMNS); // Edit size of cards.
+const numTarget = COLUMNS;
 
-/* --- PART 1 - This section are executed once time. --- */
+/* --- PART 1 - This section will executed when the user click on 'Play' button. --- */
 let numGames = 0;
-initGame();
+showInitialMessage();
 
 /* --- PART 2 - Functions --- */
-function resizeCards(rows, columns) {
-    var widthCard = 100 / COLUMNS;
-    var heightCard = 100 / ROWS;
-    cards.forEach(card => card.style.width = `calc(${widthCard}% - 10px)`);
-    cards.forEach(card => card.style.height = `calc(${heightCard}% - 10px)`);
-}
-
 function initGame() {
     numGames += 1;
     if (numGames == 1) {
@@ -25,12 +19,33 @@ function initGame() {
         console.log(`Game #${numGames}`);
         cards.forEach(card => card.classList.remove('flip'));
     }
-    //shuffleCards();
     cards.forEach(card => card.addEventListener('click', findCard));
     [hasFlippedCard, lockBoard] = [false, false];
     numMatch = 0;
     targetCards = setTargetCards(ROWS, COLUMNS);
     showTargetCards(targetCards);
+    //shuffleCards();
+}
+
+function resizeCards(rows, columns) {
+    var widthCard = 100 / COLUMNS;
+    var heightCard = 100 / ROWS;
+    cards.forEach(card => card.style.width = `calc(${widthCard}% - 10px)`);
+    cards.forEach(card => card.style.height = `calc(${heightCard}% - 10px)`);
+}
+
+function showInitialMessage() {
+    $('.modal-title').text('Actividad 1');
+    $('.modal-image').attr("src", "images/instructions.svg");
+    $('.modal-message').text('Observa detenidamente e intenta memorizar el orden en que se abren las cartas y procede abrirlas una por una. No te preocupes por el tiempo, el objetivo es reforzar tu memoria lógica. ¡Animo!');
+    $('#myModalCenter').modal({backdrop: 'static', keyboard: false}); // Show modal and block other interactions around the box  
+}
+
+function showFinalMessage() {
+    $('.modal-title').text('¡Actividad 1: Completa!');
+    $('.modal-image').attr("src", "images/trophy.svg");
+    $('.modal-message').text('¡Muy bien! Has completado la actividad. No te preocupes si te tomo algo de tiempo, la idea es que mejores en cada oportunidad. ¿Deseas continuar avanzando o repetir el nivel?');
+    $('#myModalCenter').modal({backdrop: 'static', keyboard: false}); // Show modal and block other interactions around the box  
 }
 
 function shuffleCards() { // Asign a unique random number to 12 cards.
@@ -160,10 +175,6 @@ function hideCard() {
 function blockBoard() { // Necessary to work fine avoid double click (line 10).
     [hasFlippedCard, lockBoard] = [false, false];
     selectedCard = null;
-}
-
-function showFinalMessage() {
-    $('#myModalCenter').modal({backdrop: 'static', keyboard: false}); // Show modal and block other interactions around the box  
 }
 
 function soundMatch() {
