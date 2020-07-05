@@ -1,5 +1,5 @@
 ---
 applications:
 - name: ncp-activity2
-  memory: 64M
+  memory: 128M
   buildpack: https://github.com/cloudfoundry/staticfile-buildpack
