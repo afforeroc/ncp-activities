@@ -1,4 +1,0 @@
-# Estilo de juego 1
-1. Hay un panel superior que indica las cartas que debes buscar
-2. Se muestran todas las cartas a la vez
-3. Debes buscar la carta o cartas que te soliciten para terminar el juego
