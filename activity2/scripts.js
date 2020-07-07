@@ -5,7 +5,6 @@ const COLUMNS = 4;
 const cards = document.querySelectorAll('.memory-card'); // Constant list of all memory-cards.
 resizeCards(ROWS, COLUMNS); // Edit size of cards.
 let numTarget = 6;
-shuffleCards();
 
 /* --- PART 1 - This section will executed when the user click on 'Play' button. --- */
 let numGames = 0;
@@ -24,7 +23,7 @@ function initGame() {
     [hasFlippedCard, lockBoard] = [false, false];
     [firstCard, secondCard] = [null, null];
     numMatch = 0;
-    shuffleCards();
+    shuffleCards(COLUMNS);
 }
 
 function resizeCards(rows, columns) {
@@ -35,7 +34,6 @@ function resizeCards(rows, columns) {
 }
 
 function showInitialMessage() {
-    console.log("InitialMessage");
     $('.modal-title').text('Actividad 2');
     $('.modal-image').attr("src", "images/instructions.svg");
     $('.modal-message').text('Encuentra las cartas que son pareja destapandolas de dos en dos. Tomate tu tiempo, el objetivo es reforzar tu memoria visual realizando el mínimo de pasos posibles para completar esta actividad. ¡Ánimo!');
@@ -49,11 +47,76 @@ function showFinalMessage() {
     $('#myModalCenter').modal({backdrop: 'static', keyboard: false}); // Show modal and block other interactions around the box  
 }
 
-function shuffleCards() {
+function shuffleList(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
+}
+
+function findPosMatrix(position, columns) {
+    let row = Math.floor(position/columns);
+    let col = position - columns*row;
+    return [row, col];
+}
+
+function isAdjacent(possiblePos, lastPos, columns) {
+    let possibleBox = findPosMatrix(possiblePos, columns);
+    let lastBox = findPosMatrix(lastPos, columns);
+    if (Math.abs(possibleBox[0] - lastBox[0]) == 1 && Math.abs(possibleBox[1] - lastBox[1]) == 1) {
+        return 0; //Allowed: Diagonal
+    }
+    else if (Math.abs(possibleBox[0] - lastBox[0]) == 1 && Math.abs(possibleBox[1] - lastBox[1]) != 1) {
+        return 1; // Prohibited: Up or down
+    }
+    else if (Math.abs(possibleBox[0] - lastBox[0]) != 1 && Math.abs(possibleBox[1] - lastBox[1]) == 1) {
+        return 1; // Prohibited: Left or right
+    }
+    return 0;
+}
+
+function shuffleCards(columns) {
     cards.forEach(card => {
-        let randomPos = Math.floor((Math.random() * 12))
+        let randomPos = Math.floor((Math.random() * 12));
         card.style.order = randomPos;
     });
+    /*
+    let targetSet = [];
+    var imagesDir = "images/";
+    var ext = ".svg";
+    var imagesList = ['books','car','clock','glasses','handbag', 'hat', 'mail', 'palm-tree', 'pencil', 'shoe', 'shop', 'tic-tac-toe'];
+    shuffleList(imagesList);
+    while (targetSet.length < 12) {
+        let image = imagesList.shift();
+        var imageFilename = imagesDir + image + ext;
+        let randomPos1 = Math.floor((Math.random() * 12));
+        let randomPos2 = Math.floor((Math.random() * 12));
+        if (randomPos1 != randomPos2 && !targetSet.includes(randomPos1) && !targetSet.includes(randomPos2) && !isAdjacent(randomPos1, randomPos2, columns)) {
+            // Part 1
+            targetSet.push(randomPos1);
+            cards[randomPos1].dataset.framework = image;
+            let frontCard1 = cards[randomPos1].querySelector(".front-face");
+            frontCard1.src = imageFilename;
+            // Part 2
+            targetSet.push(randomPos2);
+            cards[randomPos2].dataset.framework = image;
+            let frontCard2 = cards[randomPos2].querySelector(".front-face");
+            frontCard2.src = imageFilename;
+        }
+    }*/
+
 }
 
 function flipCard(){
